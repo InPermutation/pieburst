@@ -5,8 +5,9 @@ function pieburst (selector, data, opts) {
     function y(datum) { return datum[1]; }
 
     var def = {
-        w: 500,
-        h: 500
+        r: 500,
+        x: 250,
+        y: 250
     };
     for(var key in def)
         opts[key] = key in opts ? opts[key] : def[key];
@@ -15,18 +16,16 @@ function pieburst (selector, data, opts) {
         maxy = data.reduce(function(p,c){ return Math.max(p, y(c)); }, 0);
     var theta = 0.0;
 
-    d3.select(selector).append("svg")
-        .attr("width", opts.w)
-        .attr("height", opts.h)
+    return d3.select(selector)
         .selectAll("path")
         .data(data)
         .enter()
         .append("path")
         .attr('d', d3.svg.arc()
             .innerRadius(0)
-            .outerRadius(function(datum){ return y(datum) / maxy * opts.w/2})
+            .outerRadius(function(datum){ return y(datum) / maxy * opts.r/2})
             .startAngle(function(datum){ return theta; })
             .endAngle(function(datum){ return theta += (x(datum) / sumx * 2 * Math.PI); })
         )
-        .attr('transform', 'translate(' + opts.w/2 + ',' + opts.h/2 + ')')
+        .attr('transform', 'translate(' + opts.x + ',' + opts.y + ')')
 }
