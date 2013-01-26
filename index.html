@@ -6,19 +6,49 @@
         <script src="pieburst.js"></script>
         <style>
             /* use svg as parent selector just to make it clear that these are svg styles */
-            svg path {
+            svg path.avg {
                 fill: #55e;
                 stroke: #00f;
                 stroke-width: 1px;
             }
-            svg path:hover {
+            svg path:hover.avg {
                 fill: #99f;
+            }
+            svg path.max {
+                fill: #e55;
+                stroke: #f00;
+                stroke-width: 1px;
+            }
+            svg path:hover.max {
+                fill: #f99;
             }
         </style>
     </head>
     <body>
         <h1>Pieburst</h1>
         <svg id="pie" width="500" height="500"></svg>
-        <script>pieburst("#pie", [[20, 4], [30, 2], [2, 10], [13, 1.321], [15, 33], [20, 2.2]]);</script>
+        <script>
+            var avgs = [
+                [20, 4],
+                [30, 5],
+                [2, 10],
+                [13, 8.321],
+                [15, 9],
+                [20, 3.2]
+            ];
+            var maxs = [
+                [20, 8],
+                [30, 5.4],
+                [2, 16],
+                [13, 8.333],
+                [15, 10],
+                [20, 5.65]
+            ];
+        
+            /* capture the options calculated by 'max' pie */
+            ref = {};
+            pieburst("#pie", maxs, ref).attr('class', 'max');
+            pieburst("#pie", avgs, {maxy: ref.maxy}).attr('class', 'avg');
+        </script>
     </body>
 </html>
